@@ -7,6 +7,12 @@ import access from './access'
 
 const app = express()
 const redis = RedisClient(6379, 'localhost')
+redis.on('connect', function() {
+  console.log('Redis client connected')
+});
+redis.on('error', function (err) {
+  console.log('Something went wrong ' + err);
+});
 
 MongoClient.connect(process.env.MONGODB_URL, { useNewUrlParser: true }, (err, db) => {
   if (err) {
